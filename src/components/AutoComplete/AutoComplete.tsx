@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import styles from "./AutoComplete.module.css";
+
 const AutoComplete = () => {
   const [display, setDisplay] = useState(false);
   const [options, setOptions] = useState<
@@ -46,7 +48,7 @@ const AutoComplete = () => {
   }, []);
 
   return (
-    <>
+    <div className={styles.container}>
       <h1>Auto Complete</h1>
 
       <input
@@ -54,22 +56,36 @@ const AutoComplete = () => {
         type="text"
         onClick={() => setDisplay(!display)}
         placeholder="Loook for a Pokemon..."
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+        className={styles.searchInput}
       />
 
       {display && (
-        <div>
-          {options.map((option, index) => (
-            <div
-              key={`pokemon-${index}`}
-              onClick={() => setActivePokemon(option)}
-            >
-              <span>{option.name}</span>
-              <img src={option.sprite} alt={option.name} />
-            </div>
-          ))}
+        <div className={styles.dataResult}>
+          {options
+            .filter(({ name }) => !name.indexOf(search.toLowerCase()))
+            .map((option, index) => (
+              <div
+                key={`pokemon-${index}`}
+                onClick={() => setActivePokemon(option)}
+                tabIndex={0}
+                className={styles["dataResult__item"]}
+              >
+                <span className={styles["dataResult__item__text"]}>
+                  {option.name}
+                </span>
+
+                <img
+                  className={styles["dataResult__item__image"]}
+                  src={option.sprite}
+                  alt={option.name}
+                />
+              </div>
+            ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
