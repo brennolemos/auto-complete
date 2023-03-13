@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "./AutoComplete.module.css";
 
 const AutoComplete = () => {
+  const [filteredData, setFilteredData] = useState([]);
   const [display, setDisplay] = useState(false);
   const [options, setOptions] = useState<
     {
@@ -15,6 +16,10 @@ const AutoComplete = () => {
   const setActivePokemon = (pokemon: any) => {
     setSearch(pokemon.name);
     setDisplay(false);
+  };
+
+  const handlefilter = (event) => {
+    const searchWord = event.target.value;
   };
 
   useEffect(() => {
@@ -61,7 +66,7 @@ const AutoComplete = () => {
         className={styles.searchInput}
       />
 
-      {display && (
+      {filteredData.length !== 0 && (
         <div className={styles.dataResult}>
           {options
             .filter(({ name }) => !name.indexOf(search.toLowerCase()))
