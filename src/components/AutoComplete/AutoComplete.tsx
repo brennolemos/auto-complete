@@ -1,25 +1,15 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
+import { AutoCompleteProps, ListItem } from "./AutoComplete.types";
 import styles from "./AutoComplete.module.css";
 
-const AutoComplete = () => {
-  const [filteredData, setFilteredData] = useState<
-    {
-      name: string;
-      sprite: string;
-    }[]
-  >([]);
-  const [options, setOptions] = useState<
-    {
-      name: string;
-      sprite: string;
-    }[]
-  >([]);
+const AutoComplete = ({ list, placeholder }: AutoCompleteProps) => {
+  const [filteredData, setFilteredData] = useState<ListItem[]>([]);
   const [enteredWord, setEnteredWord] = useState("");
 
   const handleFilteredList = (filterItem: string) => {
-    const newFilter = options.filter((option) =>
-      option.name.toLowerCase().includes(filterItem.toLowerCase()),
+    const newFilter = list.filter((listItem) =>
+      listItem.title.toLowerCase().includes(filterItem.toLowerCase()),
     );
 
     if (filterItem === "") return setFilteredData([]);
@@ -40,35 +30,6 @@ const AutoComplete = () => {
     handleFilteredList(searchWord);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const pokemon: {
-        name: string;
-        sprite: string;
-      }[] = [];
-
-      const promises = new Array(20)
-        .fill(0)
-        .map((v, i) =>
-          fetch(`https://pokeapi.co/api/v2/pokemon-form/${i + 1}`),
-        );
-
-      Promise.all(promises).then((pokemonArr) => {
-        return pokemonArr.map((value) =>
-          value
-            .json()
-            .then(({ name, sprites: { front_default: sprite } }) =>
-              pokemon.push({ name, sprite }),
-            ),
-        );
-      });
-
-      setOptions(pokemon);
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <div className={styles.container}>
       <h1>Auto Complete</h1>
@@ -76,7 +37,7 @@ const AutoComplete = () => {
       <input
         id="auto"
         type="text"
-        placeholder="Loook for a Pokemon..."
+        placeholder={placeholder}
         value={enteredWord}
         onChange={handlefilter}
         className={styles.searchInput}
@@ -87,19 +48,20 @@ const AutoComplete = () => {
           {filteredData.map((option, index) => (
             <div
               key={`pokemon-${index}`}
-              onClick={() => setActiveItem(option.name)}
+              onClick={() => setActiveItem(option.title)}
               tabIndex={0}
               className={styles["dataResult__item"]}
             >
               <span className={styles["dataResult__item__text"]}>
-                {option.name}
+                {option.title}
               </span>
-
-              <img
-                className={styles["dataResult__item__image"]}
-                src={option.sprite}
-                alt={option.name}
-              />
+              {option.imageUrl && (
+                <img
+                  className={styles["dataResult__item__image"]}
+                  src={option.imageUrl}
+                  alt={option.title}
+                />
+              )}
             </div>
           ))}
         </div>
