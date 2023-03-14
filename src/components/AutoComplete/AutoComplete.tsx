@@ -45,21 +45,21 @@ const AutoComplete = ({ list, placeholder }: AutoCompleteProps) => {
 
       {filteredData.length !== 0 && (
         <div className={styles.dataResult}>
-          {filteredData.map((option, index) => (
+          {filteredData.map((listItem, index) => (
             <div
-              key={`pokemon-${index}`}
-              onClick={() => setActiveItem(option.title)}
+              key={`list-item-${index}`}
+              onClick={() => setActiveItem(listItem.title)}
               tabIndex={0}
               className={styles["dataResult__item"]}
             >
               <span className={styles["dataResult__item__text"]}>
-                {option.title}
+                {listItem.title}
               </span>
-              {option.imageUrl && (
+              {listItem.imageUrl && (
                 <img
                   className={styles["dataResult__item__image"]}
-                  src={option.imageUrl}
-                  alt={option.title}
+                  src={listItem.imageUrl}
+                  alt={listItem.title}
                 />
               )}
             </div>
