@@ -66,6 +66,10 @@ const AutoComplete = ({ list, placeholder }: AutoCompleteProps) => {
           ))}
         </div>
       )}
+
+      {enteredWord !== "" && filteredData.length === 0 && (
+        <p>No found data for your search. Please try another one.</p>
+      )}
     </div>
   );
 };
