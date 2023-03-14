@@ -70,7 +70,11 @@ const AutoComplete = ({ list, placeholder }: AutoCompleteProps) => {
         />
 
         {enteredWord !== "" && (
-          <button onClick={clearInput} className={styles["search__button"]}>
+          <button
+            onClick={clearInput}
+            className={styles["search__button"]}
+            aria-label="Clear Search"
+          >
             X
           </button>
         )}
