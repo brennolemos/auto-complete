@@ -57,8 +57,6 @@ const AutoComplete = ({ list, placeholder }: AutoCompleteProps) => {
 
   return (
     <div className={styles.container}>
-      <h1>Auto Complete</h1>
-
       <div className={styles.search}>
         <input
           id="auto"

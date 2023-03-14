@@ -33,6 +33,8 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Auto Complete</h1>
+
       <AutoComplete placeholder="Loook for a Pokemon..." list={pokemonList} />
     </div>
   );

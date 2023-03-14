@@ -22,4 +22,5 @@ body {
   flex-direction: column;
   background-color: var(--gray-e);
   font-family: "Nunito", sans-serif;
+  padding-top: 5rem;
 }
