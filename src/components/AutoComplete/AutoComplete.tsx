@@ -30,18 +30,31 @@ const AutoComplete = ({ list, placeholder }: AutoCompleteProps) => {
     handleFilteredList(searchWord);
   };
 
+  const clearInput = () => {
+    setFilteredData([]);
+    setEnteredWord("");
+  };
+
   return (
     <div className={styles.container}>
       <h1>Auto Complete</h1>
 
-      <input
-        id="auto"
-        type="text"
-        placeholder={placeholder}
-        value={enteredWord}
-        onChange={handlefilter}
-        className={styles.searchInput}
-      />
+      <div className={styles.search}>
+        <input
+          id="auto"
+          type="text"
+          placeholder={placeholder}
+          value={enteredWord}
+          onChange={handlefilter}
+          className={styles["search__input"]}
+        />
+
+        {enteredWord !== "" && (
+          <button onClick={clearInput} className={styles["search__button"]}>
+            X
+          </button>
+        )}
+      </div>
 
       {filteredData.length !== 0 && (
         <div className={styles.dataResult}>
